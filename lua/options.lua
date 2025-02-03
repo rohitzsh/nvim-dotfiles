@@ -2,6 +2,7 @@ vim.opt.clipboard = "unnamedplus" -- use system clipboard
 vim.opt.mouse = "a" -- allow mouse
 vim.opt.showcmd = true
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+vim.opt.wildmenu = true
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1

@@ -6,34 +6,7 @@ end
 
 local luasnip = require("luasnip")
 local cmp = require("cmp")
-
-local kind_icons = {
-  Text = "",
-  Method = "󰆧",
-  Function = "󰊕",
-  Constructor = "",
-  Field = "󰇽",
-  Variable = "󰂡",
-  Class = "󰠱",
-  Interface = "",
-  Module = "",
-  Property = "󰜢",
-  Unit = "",
-  Value = "󰎠",
-  Enum = "",
-  Keyword = "󰌋",
-  Snippet = "",
-  Color = "󰏘",
-  File = "󰈙",
-  Reference = "",
-  Folder = "󰉋",
-  EnumMember = "",
-  Constant = "󰏿",
-  Struct = "",
-  Event = "",
-  Operator = "󰆕",
-  TypeParameter = "󰅲",
-}
+local lspkind = require('lspkind')
 
 cmp.setup({
     snippet = {
@@ -76,40 +49,56 @@ cmp.setup({
         end, { "i", "s" }),
     }),
 
-  -- Let's configure the item's appearance
-  -- source: https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
+    -- Let's configure the item's appearance
+    -- source: https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
     formatting = {
-        format = function(entry, vim_item)
-          local lspkind_ok, lspkind = pcall(require, "lspkind")
-          if not lspkind_ok then
-            -- From kind_icons array
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
-              buffer = "[Buffer]",
-              nvim_lsp = "[LSP]",
-              luasnip = "[LuaSnip]",
-              nvim_lua = "[Lua]",
-                  latex_symbols = "[LaTeX]",
-                })[entry.source.name]
-                return vim_item
-          else
-            -- From lspkind
-            return lspkind.cmp_format({
-                mode = "symbol",
-                maxwidth = 50,
-                ellipsis_char = '...',
-                symbol_map = { Codeium = "", }
-            })(entry, vim_item)
-          end
-        end
+      format = lspkind.cmp_format({
+        mode = "symbol_text",
+        maxwidth = 100,
+        ellipsis_char = "...",
+        menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          luasnip = "[LuaSnip]",
+          nvim_lua = "[Lua]",
+          latex_symbols = "[Latex]",
+        })
+      }),
     },
 
-  -- Set source precedence
-  sources = cmp.config.sources({
-      { name = "codeium" },     -- For Codeium
+    -- Set source precedence
+    sources = cmp.config.sources({
+      { name = 'cmdline' },    -- For nvim-lsp
       { name = 'nvim_lsp' },    -- For nvim-lsp
-      { name = 'luasnip' },     -- For luasnip user
       { name = 'buffer' },      -- For buffer word completion
       { name = 'path' },        -- For path completion
-  })
+    })
 })
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype("gitcommit", {
+	sources = cmp.config.sources({
+		{ name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+	}, {
+		{ name = "buffer" },
+	}),
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ "/", "?" }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = "buffer" },
+	},
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "path" },
+	}, {
+		{ name = "cmdline" },
+	}),
+})
+
