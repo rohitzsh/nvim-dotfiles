@@ -5,7 +5,7 @@ if not codeium_ok then
 end
 
 codeium.setup({
-    enable_cmp_source = false,
+    enable_cmp_source = true,
     enable = true,
 })
 

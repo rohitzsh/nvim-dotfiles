@@ -4,7 +4,7 @@ if not is_ok then
 end
 
 toggleterm.setup({
-	size = 20,
+	size = 10,
 	open_mapping = [[<C-`>]], -- how to open a new terminal
 	hide_numbers = true, -- hide the number column in toggleterm buffers
 	close_on_exit = true, -- close the terminal window when the process exits

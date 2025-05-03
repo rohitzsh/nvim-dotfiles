@@ -12,7 +12,7 @@ require("mason").setup({
 
 require("mason-lspconfig").setup({
 	-- A list of servers to automatically install if they're not already installed.
-	ensure_installed = { "pylsp", "lua_ls", "bashls", 'rust_analyzer' },
+	ensure_installed = { "pylsp", "lua_ls", "bashls", "rust_analyzer" },
 })
 
 -- Set different settings for different languages' LSP.
@@ -165,3 +165,14 @@ lspconfig.ruff.setup({
 	},
 })
 
+lspconfig.jsonls.setup({
+	on_attach = on_attach,
+	settings = {
+		json = {
+			format = {
+				enable = true,
+			},
+		},
+		validate = true,
+	},
+})

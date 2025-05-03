@@ -4,13 +4,13 @@ local opts = {
 }
 
 -- Map Alt+Tab to switch to the next buffer
-vim.keymap.set('n', '<A-Tab>', ':bn<CR>', opts)
+vim.keymap.set("n", "<A-Tab>", ":bn<CR>", opts)
 
 -- Map Alt+Shift+Tab to switch to the previous buffer
-vim.keymap.set('n', '<A-S-Tab>', ':bp<CR>', opts)
+vim.keymap.set("n", "<A-S-Tab>", ":bp<CR>", opts)
 
 -- Map Ctrl+Q to close a buffer
-vim.keymap.set('n', '<C-q>', ':bd<CR>', opts)
+vim.keymap.set("n", "<C-q>", ":bd<CR>", opts)
 
 -- Hint: see `:h vim.map.set()`
 -- Better window navigation
@@ -38,4 +38,4 @@ vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
 
-
+vim.keymap.set("n", "<C-s>", ":%! jq .<cr>", opts)

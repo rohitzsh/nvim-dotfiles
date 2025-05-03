@@ -55,6 +55,7 @@ cmp.setup({
       format = lspkind.cmp_format({
         mode = "symbol_text",
         maxwidth = 100,
+        symbol_map = { Codeium = "", },
         ellipsis_char = "...",
         menu = ({
           buffer = "[Buffer]",
@@ -68,7 +69,7 @@ cmp.setup({
 
     -- Set source precedence
     sources = cmp.config.sources({
-      { name = 'cmdline' },    -- For nvim-lsp
+      { name = 'codeium' },    -- For ai completion
       { name = 'nvim_lsp' },    -- For nvim-lsp
       { name = 'buffer' },      -- For buffer word completion
       { name = 'path' },        -- For path completion
